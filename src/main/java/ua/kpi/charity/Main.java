@@ -1,4 +1,4 @@
-package charity_organization;
+package ua.kpi.charity;
 
 public class Main {
     public static void main(String[] args) {
