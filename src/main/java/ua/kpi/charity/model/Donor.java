@@ -1,21 +1,26 @@
 package ua.kpi.charity.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Donor {
+public class Donor implements Serializable {
     private final String name;
     private double money;
 
-    public Donor(String name, double money)
-    {
+    public Donor(String name, double money) {
         this.name = name;
         this.money = money;
     }
 
-    public String getName() { return name; }
-    public double getMoney() { return  money;}
-    public void setMoney(double money)
-    {
+    public String getName() {
+        return name;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
         this.money = money;
     }
 

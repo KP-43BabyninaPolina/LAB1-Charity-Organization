@@ -1,10 +1,11 @@
 package ua.kpi.charity.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Donation {
+public class Donation implements Serializable {
     private final String transactionId;
     private final Donor sender;
     private final Event event;
@@ -25,15 +26,19 @@ public class Donation {
     public String getTransactionId() {
         return transactionId;
     }
+
     public Donor getSender() {
         return sender;
     }
+
     public Event getEvent() {
         return event;
     }
+
     public LocalDateTime getDate() {
         return date;
     }
+
     public double getSum() {
         return sum;
     }

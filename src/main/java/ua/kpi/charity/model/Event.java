@@ -1,14 +1,18 @@
 package ua.kpi.charity.model;
 
+import ua.kpi.charity.model.utils.EventStatus;
+
+import java.io.*;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Objects;
 
-public class Event /*implements Comparable*/ {
+public class Event implements Serializable /*implements Comparable*/ {
     private final String name;
+    private final LinkedList<Donation> donations;
     private EventStatus status;
     private double targetSum;
     private double collectedSum;
-    private final LinkedList<Donation> donations;
 
     public Event(String name, double targetSum) {
         if (targetSum <= 0) {
@@ -66,7 +70,7 @@ public class Event /*implements Comparable*/ {
             status = EventStatus.ACTIVE;
             return "Захід успішно розпочато!";
         } else {
-           return "Неможливо почати захід: недостатньо зібраних коштів.";
+            return "Неможливо почати захід: недостатньо зібраних коштів.";
         }
     }
 
@@ -79,10 +83,42 @@ public class Event /*implements Comparable*/ {
         }
     }
 
-    public void exportDonations() {
+    public void exportDonations(String filepath, Comparator<Donation> comparator) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
+            exportDonations(oos, comparator);
+        }
     }
 
-    public void importDonations() {
+    public void exportDonations(ObjectOutputStream oos, Comparator<Donation> comparator) throws IOException {
+        var listToExport = new LinkedList<>(this.donations);
+        if (comparator != null) {
+            listToExport.sort(comparator);
+        }
+        oos.writeObject(listToExport);
+    }
+
+    public String importDonations(String filepath) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {
+            return importDonations(ois);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public String importDonations(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        int addedCount = 0;
+        var importedDonations = (LinkedList<Donation>) ois.readObject();
+
+        for (Donation d : importedDonations) {
+            if (!this.donations.contains(d)) {
+                this.donations.add(d);
+                this.collectedSum += d.getSum();
+                addedCount++;
+            }
+        }
+        if (this.collectedSum >= this.targetSum && this.status == EventStatus.PLANNED) {
+            this.status = EventStatus.SUM_GOAL_REACHED;
+        }
+        return "Імпорт завершено. Додано нових пожертв: " + addedCount;
     }
 
     @Override

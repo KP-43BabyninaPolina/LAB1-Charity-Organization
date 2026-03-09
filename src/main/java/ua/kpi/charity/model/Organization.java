@@ -1,5 +1,6 @@
 package ua.kpi.charity.model;
 
+import java.io.*;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -49,10 +50,43 @@ public class Organization {
         return total;
     }
 
-    public void exportEvents() {
+
+    public void exportEvents(String filepath) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filepath))) {
+            exportEvents(oos);
+        }
     }
 
-    public void importEvents() {
+    public void exportEvents(ObjectOutputStream oos) throws IOException {
+        oos.writeObject(this.events);
+    }
+
+    public String importEvents(String filepath, boolean overwrite) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filepath))) {
+            return importEvents(ois, overwrite);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public String importEvents(ObjectInputStream ois, boolean overwrite) throws IOException, ClassNotFoundException {
+        int addedCount = 0;
+        int updatedCount = 0;
+        var importedEvents = (LinkedList<Event>) ois.readObject();
+
+        for (Event importedEvent : importedEvents) {
+            if (this.events.contains(importedEvent)) {
+                if (overwrite) {
+                    this.events.remove(importedEvent);
+                    this.events.add(importedEvent);
+                    updatedCount++;
+                }
+            } else {
+                this.events.add(importedEvent);
+                addedCount++;
+            }
+        }
+        return String.format("Імпорт завершено. Додано нових заходів: %d, Перезаписано існуючих: %d",
+                addedCount, updatedCount);
     }
 
     @Override
