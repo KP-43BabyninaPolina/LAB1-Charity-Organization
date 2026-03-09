@@ -1,4 +1,4 @@
-package ua.kpi.charity.model;
+package ua.kpi.charity.model.utils;
 
 public enum EventStatus {
     PLANNED,
