@@ -34,7 +34,7 @@ public class OrganizationExportImportTests {
         org.addEvent(activeEvent);
 
         Donor donor = new Donor("Анна", 1000000.0);
-        activeEvent.addDonation(new Donation(10000.0, donor, activeEvent));
+        activeEvent.processDonation(new Donation(10000.0, donor, activeEvent));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class OrganizationExportImportTests {
         var simulatedFileContent = simulateFileContent();
         when(mockInStream.readObject()).thenReturn(simulatedFileContent);
 
-        activeEvent.addDonation(new Donation(50000.0, new Donor("Тестер", 50000.0), activeEvent));
+        activeEvent.processDonation(new Donation(50000.0, new Donor("Тестер", 50000.0), activeEvent));
         assertEquals(60000.0, org.getTotalCollectedFunds());
 
         String result = org.importEvents(mockInStream, true);
@@ -65,7 +65,7 @@ public class OrganizationExportImportTests {
         var simulatedFileContent = simulateFileContent();
         when(mockInStream.readObject()).thenReturn(simulatedFileContent);
 
-        activeEvent.addDonation(new Donation(20000.0, new Donor("Тестер", 20000.0), activeEvent));
+        activeEvent.processDonation(new Donation(20000.0, new Donor("Тестер", 20000.0), activeEvent));
 
         String result = org.importEvents(mockInStream, false);
 
@@ -78,7 +78,7 @@ public class OrganizationExportImportTests {
     {
         var simulatedFileContent = new LinkedList<Event>();
         var oldEvent = new Event("Бронежилети", 500000.0);
-        oldEvent.addDonation(new Donation(10000.0, new Donor("Анна", 1000000.0), oldEvent));
+        oldEvent.processDonation(new Donation(10000.0, new Donor("Анна", 1000000.0), oldEvent));
         simulatedFileContent.add(oldEvent);
 
         return simulatedFileContent;

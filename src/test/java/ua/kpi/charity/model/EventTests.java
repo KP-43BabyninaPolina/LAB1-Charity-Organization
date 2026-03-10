@@ -19,16 +19,16 @@ public class EventTests {
     @Test
     void testSetTargetSumLesserThanCollected() {
         Donation donation = new Donation(5000.0, donor, event);
-        event.addDonation(donation);
+        event.processDonation(donation);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> event.setTargetSum(4000.0));
         assertEquals("Нова цільова сума не може бути меншою за вже зібрану суму.", exception.getMessage());
     }
 
     @Test
-    void testAddDonationAndReachGoal() {
+    void testProcessDonationAndReachGoal() {
         Donation hugeDonation = new Donation(10000.0, donor, event);
-        event.addDonation(hugeDonation);
+        event.processDonation(hugeDonation);
 
         assertEquals(10000.0, event.getCollectedSum());
         assertEquals(1, event.getDonations().size());
@@ -37,7 +37,7 @@ public class EventTests {
 
     @Test
     void testStartEventSuccess() {
-        event.addDonation(new Donation(10000.0, donor, event));
+        event.processDonation(new Donation(10000.0, donor, event));
 
         String successResult = event.start();
 
@@ -55,19 +55,19 @@ public class EventTests {
     }
 
     @Test
-    void testAddDonationWhenEventIsActiveThrowsException() {
-        event.addDonation(new Donation(10000.0, donor, event));
+    void testProcessDonationWhenEventIsActiveThrowsException() {
+        event.processDonation(new Donation(10000.0, donor, event));
         event.start();
 
         Donation lateDonation = new Donation(500.0, donor, event);
 
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> event.addDonation(lateDonation));
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> event.processDonation(lateDonation));
         assertTrue(exception.getMessage().contains("Пожертви не приймаються"));
     }
 
     @Test
     void testEndEventSuccess() {
-        event.addDonation(new Donation(10000.0, donor, event));
+        event.processDonation(new Donation(10000.0, donor, event));
         event.start();
 
         String successResult = event.end();

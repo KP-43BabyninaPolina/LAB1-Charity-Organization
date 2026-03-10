@@ -45,7 +45,7 @@ public class Donor implements Serializable {
         try {
             money -= sum;
             var donat = new Donation(sum, this, event);
-            event.addDonation(donat);
+            event.processDonation(donat);
             return "Пожертву завершено: Дякуємо!\n" + donat.generateReceipt();
         } catch (IllegalStateException e) {
             money += sum;

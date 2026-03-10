@@ -33,9 +33,9 @@ public class EventExportImportTests {
         event = new Event("Збір на РЕБ", 100000.0);
         Donor donor = new Donor("Олексій", 50000.0);
 
-        event.addDonation(new Donation(5000.0, donor, event));
-        event.addDonation(new Donation(1500.0, donor, event));
-        event.addDonation(new Donation(3000.0, donor, event));
+        event.processDonation(new Donation(5000.0, donor, event));
+        event.processDonation(new Donation(1500.0, donor, event));
+        event.processDonation(new Donation(3000.0, donor, event));
 
         tempFile = tempDir.resolve("test.dat");
     }
