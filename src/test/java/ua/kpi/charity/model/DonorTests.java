@@ -23,7 +23,7 @@ public class DonorTests {
 
     @Test
     void testDonateSuccess() {
-        String result = donor.Donate(plannedEvent, 2000.0, org);
+        String result = donor.donate(plannedEvent, 2000.0, org);
 
         assertTrue(result.startsWith("Пожертву завершено: Дякуємо!"));
         assertEquals(2000.0, plannedEvent.getCollectedSum());
@@ -33,7 +33,7 @@ public class DonorTests {
 
     @Test
     void testDonateLesserThanOne() {
-        String result = donor.Donate(plannedEvent, 0, org);
+        String result = donor.donate(plannedEvent, 0, org);
 
         assertEquals("Сума для пожертви має бути більша за 0.", result);
         assertEquals(0.0, plannedEvent.getCollectedSum());
@@ -41,7 +41,7 @@ public class DonorTests {
 
     @Test
     void testDonateMoreThanHave() {
-        String result = donor.Donate(plannedEvent, 15000.0, org);
+        String result = donor.donate(plannedEvent, 15000.0, org);
 
         assertEquals("Пожертву скасовано: недостатньо коштів.", result);
         assertEquals(10000.0, donor.getMoney());
@@ -52,7 +52,7 @@ public class DonorTests {
     void testDonateToWrongEvent() {
         Event wrongEvent = new Event("Невідомий збір", 1000.0);
 
-        String result = donor.Donate(wrongEvent, 500.0, org);
+        String result = donor.donate(wrongEvent, 500.0, org);
 
         assertEquals("Пожертву скасовано: не знайдено такої події у списку вказаної організації.", result);
         assertEquals(0.0, plannedEvent.getCollectedSum());
@@ -63,10 +63,10 @@ public class DonorTests {
     @Test
     void testDonateToEventWithInvalidStatus() {
         Donor donor1 = new Donor("Поліна", 50000.0);
-        donor1.Donate(plannedEvent, 50000.0, org);
+        donor1.donate(plannedEvent, 50000.0, org);
         plannedEvent.start();
 
-        String result = donor.Donate(plannedEvent, 1000.0, org);
+        String result = donor.donate(plannedEvent, 1000.0, org);
 
         assertTrue(result.startsWith("Пожертву скасовано:"));
         assertEquals(50000.0, org.getTotalCollectedFunds());

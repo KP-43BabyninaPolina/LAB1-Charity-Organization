@@ -24,7 +24,7 @@ public class Donor implements Serializable {
         this.money = money;
     }
 
-    public String Donate(Event event, double sum, Organization org) {
+    public String donate(Event event, double sum, Organization org) {
         if (event == null || org == null) {
             throw new IllegalArgumentException();
         }

@@ -51,8 +51,8 @@ public class OrganizationTests {
         assertEquals(0.0, org.getTotalCollectedFunds());
 
         Donor donor = new Donor("Іван", 200000.0);
-        donor.Donate(event1, 10000.0, org);
-        donor.Donate(event2, 25000.0, org);
+        donor.donate(event1, 10000.0, org);
+        donor.donate(event2, 25000.0, org);
 
         assertEquals(35000.0, org.getTotalCollectedFunds());
     }

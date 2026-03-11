@@ -20,7 +20,7 @@ public class DonationTests {
 
     @Test
     void testGenerateReceipt() {
-        var result = donor.Donate(event, 1000.0, org);
+        var result = donor.donate(event, 1000.0, org);
         var donat = event.getDonations().getFirst();
 
         var receipt = donat.generateReceipt();
@@ -34,8 +34,8 @@ public class DonationTests {
 
     @Test
     void testEqualsAndHashCode() {
-        donor.Donate(event, 500.0, org);
-        donor.Donate(event, 500.0, org);
+        donor.donate(event, 500.0, org);
+        donor.donate(event, 500.0, org);
 
         var don1 = event.getDonations().get(0);
         var don2 = event.getDonations().get(1);
