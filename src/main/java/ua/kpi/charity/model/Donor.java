@@ -21,6 +21,10 @@ public class Donor implements Serializable {
     }
 
     public void setMoney(double money) {
+        if (money < 0) {
+            throw new IllegalArgumentException("Нова сума грошей не може бути меншою за 0.");
+        }
+
         this.money = money;
     }
 
