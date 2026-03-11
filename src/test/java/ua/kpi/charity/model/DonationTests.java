@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DonationTests {
+
     private Donor donor;
     private Event event;
     private Organization org;

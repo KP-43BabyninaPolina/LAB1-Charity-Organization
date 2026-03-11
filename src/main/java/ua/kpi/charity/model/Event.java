@@ -7,7 +7,8 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Objects;
 
-public class Event implements Serializable /*implements Comparable*/ {
+public class Event implements Serializable{
+
     private final String name;
     private final LinkedList<Donation> donations;
     private EventStatus status;

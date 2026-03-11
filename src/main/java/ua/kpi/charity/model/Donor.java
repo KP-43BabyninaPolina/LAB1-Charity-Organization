@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Donor implements Serializable {
+
     private final String name;
     private double money;
 

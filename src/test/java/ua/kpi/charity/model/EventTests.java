@@ -36,6 +36,17 @@ public class EventTests {
     }
 
     @Test
+    void testProcessDonationWithInvalidStatus() {
+        event.processDonation(new Donation(10000.0, donor, event));
+        event.start();
+
+        Donation lateDonation = new Donation(500.0, donor, event);
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> event.processDonation(lateDonation));
+        assertTrue(exception.getMessage().contains("Пожертви не приймаються"));
+    }
+
+    @Test
     void testStartEventSuccess() {
         event.processDonation(new Donation(10000.0, donor, event));
 
@@ -46,23 +57,11 @@ public class EventTests {
     }
 
     @Test
-    void testStartEventFail()
-    {
+    void testStartEventFail() {
         String failResult = event.start();
 
         assertEquals("Неможливо почати захід: недостатньо зібраних коштів.", failResult);
         assertEquals(EventStatus.PLANNED, event.getStatus());
-    }
-
-    @Test
-    void testProcessDonationWhenEventIsActiveThrowsException() {
-        event.processDonation(new Donation(10000.0, donor, event));
-        event.start();
-
-        Donation lateDonation = new Donation(500.0, donor, event);
-
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> event.processDonation(lateDonation));
-        assertTrue(exception.getMessage().contains("Пожертви не приймаються"));
     }
 
     @Test
@@ -77,8 +76,7 @@ public class EventTests {
     }
 
     @Test
-    void testEndEventFail()
-    {
+    void testEndEventFail() {
         String failResult = event.end();
 
         assertEquals("Неможливо завершити захід: його ще не було розпочато.", failResult);
@@ -101,7 +99,6 @@ public class EventTests {
     @Test
     void testConstructorWithInvalidTargetSum() {
         assertThrows(IllegalArgumentException.class, () -> new Event("Поганий збір", 0));
-
         assertThrows(IllegalArgumentException.class, () -> new Event("Поганий збір 2", -500));
     }
 }

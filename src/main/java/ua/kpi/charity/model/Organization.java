@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Organization {
+
     private String name;
     private LinkedList<Event> events;
 

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DonorTests {
+
     private Organization org;
     private Event plannedEvent;
     private Donor donor;

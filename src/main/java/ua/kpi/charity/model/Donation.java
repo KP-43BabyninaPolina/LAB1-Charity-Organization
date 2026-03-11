@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Donation implements Serializable {
+
     private final String transactionId;
     private final Donor sender;
     private final Event event;

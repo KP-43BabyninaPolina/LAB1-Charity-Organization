@@ -12,19 +12,18 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Comparator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class EventExportImportTests {
-    private Event event;
 
     @TempDir
     Path tempDir;
-
     Path tempFile;
-
+    private Event event;
     @Mock
     private Comparator<Donation> mockComparator;
 
