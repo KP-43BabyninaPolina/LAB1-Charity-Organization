@@ -53,8 +53,8 @@ public class Event implements Serializable /*implements Comparable*/ {
     }
 
     public void processDonation(Donation donat) {
-        if (status == EventStatus.ACTIVE || status == EventStatus.FINISHED) {
-            throw new IllegalStateException("Пожертви не приймаються (захід вже триває або завершено).");
+        if (status != EventStatus.PLANNED) {
+            throw new IllegalStateException("Пожертви не приймаються (необхідні кошти вже зібрано).");
         }
 
         donations.add(donat);
